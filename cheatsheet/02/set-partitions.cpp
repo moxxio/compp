@@ -13,11 +13,11 @@ void print_arr(vll& arr) {
     cout << endl;
 }
 
-void visit() { // do something with A
-    print_arr(A);
+void visit() {
+    print_arr(A); // do something with A
 }
 
-vll A; // indicates in which a partition an element is
+vll A; // indicates in which partition an element is
 
 void proc_f(ll mu, ll nu, ll sigma) {
     if (mu == 2) visit(); // do something
