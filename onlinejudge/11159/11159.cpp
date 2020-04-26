@@ -89,10 +89,18 @@ int main() {
         // cout << "n " << n << " m " << m << endl;
         for (ll i = 0; i < n; i++) { // build bipartite graph
             for (ll j = 0; j < m; j++) {
-                if (setB[j] % setA[i] == 0) {
-                    // cout << setA[i] << " and " << setB[j] << endl;
-                    adj[i].push_back(j + n);
-                    adj[j + n].push_back(i);
+                if (setA[i] != 0) {
+                    if (setB[j] % setA[i] == 0) {
+                        // cout << setA[i] << " and " << setB[j] << endl;
+                        adj[i].push_back(j + n);
+                        adj[j + n].push_back(i);
+                    }
+                } else {
+                    if (setB[j] == 0) {
+                        // cout << setA[i] << " and " << setB[j] << endl;
+                        adj[i].push_back(j + n);
+                        adj[j + n].push_back(i);
+                    }
                 }
             }
         }
