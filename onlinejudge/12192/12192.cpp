@@ -20,7 +20,44 @@ constexpr ll MAX = 505;
 ll plot[MAX][MAX];
 ll N, M, Q, LB, UB;
 
-ll lower_bound() {
+ll row_lower_bound(ll i) {
+    ll lo = 0, hi = M - 1;
+    while (lo < hi) {
+        ll mi = (lo + hi) / 2;
+        if (plot[i][mi] >= LB) lo = mi;
+        else hi = mi - 1;
+    }
+    return lo;
+}
+
+ll row_upper_bound(ll i) {
+    ll lo = 0, hi = M - 1;
+    while (lo < hi) {
+        ll mi = (lo + hi) / 2;
+        if (plot[i][mi] <= UB) lo = mi;
+        else hi = mi - 1;
+    }
+    return lo;
+}
+
+ll col_lower_bound(ll j) {
+    ll lo = 0, hi = M - 1;
+    while (lo < hi) {
+        ll mi = (lo + hi) / 2;
+        if (plot[mi][j] >= LB) lo = mi;
+        else hi = mi - 1;
+    }
+    return lo;
+}
+
+ll col_upper_bound(ll j) {
+    ll lo = 0, hi = M - 1;
+    while (lo < hi) {
+        ll mi = (lo + hi) / 2;
+        if (plot[mi][j] <= UB) lo = mi;
+        else hi = mi - 1;
+    }
+    return lo;
 }
 
 int main() {
@@ -33,10 +70,10 @@ int main() {
         cin >> Q;
 
         for (ll k = 0; k < Q; k++) {
-            ll x1 = -1, y1 = -1, x2 = -1, y2 = -1;
+            ll ans = 0, x1, y1, x2, y2;
             cin >> LB >> UB;
             for (ll i = 0; i < N; i++) {
-
+                x1 = row_lower_bound(
             }
         }
     }
