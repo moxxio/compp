@@ -35,20 +35,22 @@ int main() {
     while (1) {
         cin >> N;
         if (N == 0) break;
-        for (ll i = 0; i < N; i++) cin >> A[i];
+
+        A[0] = 0;
+        for (ll i = 1; i <= N; i++) cin >> A[i];
         cin >> B >> R >> V >> E >> F;
 
         mem[0] = 0;
-        for (ll i = 1; i <= A[N-1]; i++) mem[i] = time(i-1) + mem[i-1];
+        for (ll i = 1; i <= A[N]; i++) mem[i] = time(i-1) + mem[i-1];
 
         dp[0] = 0;
-        for (ll i = 1; i < N; i++) {
+        for (ll i = 1; i <= N; i++) {
             dp[i] = timeAB(0, i); // + dp[0]
             for (ll j = 1; j < i; j++) {
                 dp[i] = min(dp[i], dp[j] + timeAB(j, i) + B);
             }
         } 
-        cout << fixed << setprecision(4) << dp[N-1] << endl;
+        cout << fixed << setprecision(4) << dp[N] << endl;
     }
     return 0;
 }
