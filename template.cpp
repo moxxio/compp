@@ -4,7 +4,7 @@
 
 using namespace std;
 typedef long long ll;
-typedef __int128 lll;
+// typedef __int128 lll;
 typedef unsigned long long ull;
 typedef long double ld;
 typedef pair<ll, ll> pll;
