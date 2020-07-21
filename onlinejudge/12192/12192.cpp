@@ -17,65 +17,49 @@ constexpr ld eps = 1e-9;
 constexpr ld PI = 2.0 * acos(0.0);
 constexpr ll MAX = 505;
 
-ll plot[MAX][MAX];
+vll plot[MAX];
 ll N, M, Q, LB, UB;
 
-ll row_lower_bound(ll i) {
-    ll lo = 0, hi = M - 1;
-    while (lo < hi) {
-        ll mi = (lo + hi) / 2;
-        if (plot[i][mi] >= LB) lo = mi;
-        else hi = mi - 1;
-    }
-    return lo;
-}
-
-ll row_upper_bound(ll i) {
-    ll lo = 0, hi = M - 1;
-    while (lo < hi) {
-        ll mi = (lo + hi) / 2;
-        if (plot[i][mi] <= UB) lo = mi;
-        else hi = mi - 1;
-    }
-    return lo;
-}
-
-ll col_lower_bound(ll j) {
-    ll lo = 0, hi = M - 1;
-    while (lo < hi) {
-        ll mi = (lo + hi) / 2;
-        if (plot[mi][j] >= LB) lo = mi;
-        else hi = mi - 1;
-    }
-    return lo;
-}
-
-ll col_upper_bound(ll j) {
-    ll lo = 0, hi = M - 1;
-    while (lo < hi) {
-        ll mi = (lo + hi) / 2;
-        if (plot[mi][j] <= UB) lo = mi;
-        else hi = mi - 1;
-    }
-    return lo;
+ll quad(ll x1, ll y1, ll x2, ll y2) {
+    return min(abs(x1 - x2) + 1, abs(y1 - y2) + 1);
 }
 
 int main() {
     while (1) {
         cin >> N >> M;
         if (N == 0 && M == 0) break;
-        for (ll i = 0; i < N; i++) for (ll j = 0; j < M; j++) {
-            cin >> plot[i][j];
+        for (ll i = 0; i < MAX; i++) plot[i].clear();
+        for (ll i = 0; i < N; i++) {
+            for (ll j = 0; j < M; j++) {
+                ll tmp;
+                cin >> tmp;
+                plot[i].push_back(tmp); 
+            }
         }
         cin >> Q;
 
         for (ll k = 0; k < Q; k++) {
-            ll ans = 0, x1, y1, x2, y2;
+            ll ans = 0, x1, x2;
             cin >> LB >> UB;
-            for (ll i = 0; i < N; i++) {
-                x1 = row_lower_bound(
+            for (ll y1 = 0; y1 < N; y1++) {
+                auto it_x1 = lower_bound(plot[y1].begin(), plot[y1].end(), LB);
+                x1 = distance(plot[y1].begin(), it_x1);
+                for (ll y2 = y1; y2 < N; y2++) {
+                    auto it_x2 = prev(upper_bound(plot[y2].begin(), plot[y2].end(), UB));
+                    x2 = distance(plot[y2].begin(), it_x2);
+                    if (x2 < x1) continue;
+                    ll can = quad(x1, y1, x2, y2);
+                    if (can > ans) {
+                        // cout << "x1=" << x1 << "\ty1=" << y1 << endl;
+                        // cout << "x2=" << x2 << "\ty2=" << y2 << endl;
+                        // cout << "ca=" << can << endl;
+                        ans = can;
+                    }
+                }
             }
+            cout << ans << endl;
         }
+        cout << "-" << endl;
     }
     return 0;
 }
